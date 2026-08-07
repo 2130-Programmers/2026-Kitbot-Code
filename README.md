@@ -1,116 +1,64 @@
 # 2026 KitBot Code
 
-Robot code for the [2026 FRC KitBot](https://www.firstinspires.org/robotics/frc/kitbot), built with WPILib and the command-based framework. This project controls a differential-drive robot with a fuel intake and launcher mechanism using REV Spark Max motor controllers.
+WPILib robot code for the 2026 FRC KitBot — differential drive with a fuel intake and launcher.
 
-## Requirements
+## Setup
 
-- [WPILib 2026](https://docs.wpilib.org/) (install via the [WPILib installer](https://github.com/wpilibsuite/allwpilib/releases))
-- Java 17
-- VS Code with the WPILib extension (recommended)
-
-## Project Structure
-
-```
-src/main/java/frc/robot/
-├── Main.java              # Entry point
-├── Robot.java             # Robot lifecycle and command scheduler
-├── RobotContainer.java    # Subsystems, bindings, and auto chooser
-├── Constants.java         # Motor IDs, voltages, and tuning values
-├── commands/
-│   └── Autos.java         # Autonomous routines
-└── subsystems/
-    ├── CANDriveSubsystem.java   # Differential drive
-    └── CANFuelSubsystem.java    # Intake / launch mechanism
-```
-
-## Hardware
-
-### Drivetrain (`CANDriveSubsystem`)
-
-| Motor            | CAN ID |
-|------------------|--------|
-| Left leader      | 10     |
-| Left follower    | 11     |
-| Right leader     | 9      |
-| Right follower   | 8      |
-
-Four brushed Spark Max controllers in a differential drive configuration. Followers track their respective leaders. The left side is inverted so positive values drive both sides forward.
-
-### Fuel Mechanism (`CANFuelSubsystem`)
-
-| Motor              | CAN ID |
-|--------------------|--------|
-| Intake / launcher  | 12     |
-| Feeder             | 19     |
-
-Two brushed Spark Max controllers run the intake roller and feeder roller. Motor voltages are tunable from the SmartDashboard at runtime.
+- Install [WPILib 2026](https://docs.wpilib.org/)
+- Open this folder in VS Code with the WPILib extension
+- Set your team number in `.wpilib/wpilib_preferences.json` (currently **21301**)
+- Deploy with **WPILib: Deploy Robot Code** or `./gradlew deploy`
 
 ## Controls
 
-The operator uses an Xbox controller on **USB port 0** (see `Constants.OperatorConstants`).
+Xbox controller on USB port **0**.
 
-| Input              | Action                                      |
-|--------------------|---------------------------------------------|
-| Left stick Y       | Drive forward / reverse                     |
-| Right stick X      | Turn in place                               |
-| Left bumper        | Intake fuel                                 |
-| Right bumper       | Spin up (1 s), then launch                  |
-| A button           | Eject fuel out the intake                   |
-| B button           | Launch at alternate speed (second bot)      |
+| Input         | Action                    |
+|---------------|---------------------------|
+| Left stick    | Drive                     |
+| Right stick   | Turn                      |
+| Left bumper   | Intake                    |
+| Right bumper  | Spin up, then launch      |
+| A             | Eject                     |
+| B             | Launch (alternate speed)  |
 
-Drive and rotation inputs are scaled to 70% and 80% respectively for easier control.
+## Operating the Robot
 
-## Autonomous
+Edit this section for your team's workflow.
 
-The default autonomous routine (`Autos.exampleAuto`):
+### Before the match
 
-1. Drive backward for 0.25 seconds
-2. Stop driving
-3. Spin up the launcher for 1 second
-4. Launch fuel for 9 seconds
-5. Stop the launcher
+1. Power on the robot and confirm the roboRIO connects in Driver Station
+2. Check battery voltage — TODO: add your minimum voltage
+3. Confirm fuel is loaded — TODO: describe how much / where
+4. Select autonomous mode on the SmartDashboard — TODO: add routine names
+5. Place the robot on the field — TODO: add starting position
 
-Select routines from the SmartDashboard auto chooser. Add more options in `RobotContainer` with `autoChooser.addOption(...)`.
+### Autonomous
+
+1. Enable autonomous when the match starts
+2. TODO: describe what the robot should do (e.g. drive back, shoot fuel)
+3. TODO: add any notes for drivers (stay clear, watch for X, etc.)
+
+### Teleop
+
+1. Take over when teleop begins
+2. Drive to pick up fuel — TODO: add your preferred approach
+3. Hold **left bumper** to intake
+4. Hold **right bumper** to spin up and launch
+5. Use **A** to eject if fuel gets stuck
+6. TODO: add scoring / defense / endgame steps
+
+### After the match
+
+1. Disable the robot in Driver Station
+2. Power off or switch to disabled — TODO: add your pit procedure
+3. Check for loose wiring or jammed fuel — TODO: add inspection checklist
 
 ## Tuning
 
-Fuel mechanism voltages live in `Constants.FuelConstants` and are also exposed on the SmartDashboard:
-
-- Intaking feeder / intake roller voltages
-- Launching feeder / launcher roller voltages
-- Spin-up feeder roller voltage and duration
-
-Tune on the dashboard during practice, then copy the values back into `Constants.java` for consistent behavior.
-
-## Build and Deploy
-
-### Build
-
-```bash
-./gradlew build
-```
-
-### Deploy to roboRIO
-
-1. Set your team number in `.wpilib/wpilib_preferences.json` (currently **21301**), or pass it on the command line.
-2. Connect the robot to the same network as your development machine.
-3. Deploy from VS Code (**WPILib: Deploy Robot Code**) or from the terminal:
-
-```bash
-./gradlew deploy
-```
-
-### Simulation
-
-Simulation GUI and Driver Station integration are enabled in `build.gradle`. Run simulation from VS Code with **WPILib: Simulate Robot Code on Desktop**.
-
-## Dependencies
-
-| Library   | Version  |
-|-----------|----------|
-| GradleRIO | 2026.2.1 |
-| REVLib    | 2026.0.5 |
+Fuel roller voltages can be adjusted on the SmartDashboard during practice. Copy good values into `Constants.java` when done.
 
 ## License
 
-This project uses WPILib, which is licensed under the BSD 3-Clause License. See [WPILib-License.md](WPILib-License.md) for details.
+WPILib is BSD 3-Clause. See [WPILib-License.md](WPILib-License.md).
